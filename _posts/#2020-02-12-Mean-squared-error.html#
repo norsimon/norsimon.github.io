@@ -1,0 +1,150 @@
+
+
+<ul class="org-ul">
+<li>Notes from reading the 2009 paper:
+<ul class="org-ul">
+<li>"Mean Squared Error: Love It or Leave It?"</li>
+<li>by Zhou Wang and Alan C. Bovik</li>
+<li><a href="https://ieeexplore.ieee.org/document/4775883">https://ieeexplore.ieee.org/document/4775883</a></li>
+</ul></li>
+<li>This is not a scientific report, there are no new results, it is more of an overview or opinion piece.</li>
+<li>The area of interest is quantification of signal-, mainly image-, fidelity, i.e., the construction of quantitative measures for <i>perceptual signal quality</i> that agree with what we know about the human perceptual system and with how humans, subjectively, score signal quality.</li>
+<li>Points out some of the many issues with using the mean-squared-error (<b>MSE</b>) as a measure for <b>signal-fidelity</b>. But also explains why the MSE is so widespread and therefore self-perpetuating.
+<ul class="org-ul">
+<li>Peak-signal-to-noise-ratio (PSNR) normally doesn't contain any new information compared to MSE</li>
+</ul></li>
+<li>In spite of the title, only the first part of the paper is about the MSE, then it covers other measures and their application beyond images (video, audio)</li>
+<li>This review is from before deep learning took off in 2012, it would be interesting to know how much has changed in the research area of signal fidelity since then. It is unlikely that it has survived unscathed.</li>
+</ul>
+<div id="outline-container-org566d4af" class="outline-2">
+<h2 id="org566d4af"><span class="section-number-2">1.</span> Mean Squared Error (MSE)</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><b>Pros</b>
+<ul class="org-ul">
+<li>Simple (to understand and calculate)</li>
+<li>Mathematically well-behaved (differentiable, symmetric, convex)</li>
+<li>Additive, when noise sources are independent</li>
+<li>When using the L<sub>2</sub> norm (not the L<sub>1</sub> or other norms)
+<ul class="org-ul">
+<li>It is natural way to define the energy of the error signal</li>
+<li>The energy is preserved under linear transforms, e.g. Fourier; meaning that the energy is the same in the signal and transform domains</li>
+</ul></li>
+</ul></li>
+<li><b>Cons</b>
+<ul class="org-ul">
+<li>Fundamentally, the MSE is not sensitive to many of the aspects of images that are fundamental to our interpretation of them.</li>
+<li>The MSE is
+<ol class="org-ol">
+<li>Independent of spatio-temporal structures in the signal</li>
+<li>Independent of relationship between signal and error</li>
+<li>Independent of sign of error</li>
+<li>Treating all data (samples) as equally important</li>
+</ol></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga3502a5" class="outline-2">
+<h2 id="orga3502a5"><span class="section-number-2">2.</span> The Structural Similarity (SSIM) index</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Recasting the problem of signal-fidelity measurements in the language of <i>information communication</i>, the desiderata for a measure are that it makes good use of any information we many have about the <b>transmitter</b>, <b>channel</b>, and <b>receiver</b>.
+<ul class="org-ul">
+<li>Work along these lines go back to the 1970s</li>
+<li>Transmitter: the clean/original/pristine image</li>
+<li>Receiver: The human visual system</li>
+<li>Natural images occupies a tiny portion in the space of all possible images
+<ul class="org-ul">
+<li>This is <i>prior knowledge</i></li>
+<li>Hypothesized that the human visual system is highly adapted to deal with natural images (makes sense)</li>
+</ul></li>
+</ul></li>
+<li>The structural similarity (<b>SSIM</b>) measure was introduced in 2002, by the same authors.
+<ul class="org-ul">
+<li>Main motivation: there is much structure in natural images, i.e., strong correlations between neighboring pixels and MSE doesn't capture this</li>
+<li>Philosophy: the human visual system is a an ideal information extractor, identifying objects/structures in the visual scene</li>
+<li>Seek to create a measure that is sensitive to structural changes (noise, blur, lossy compression) but insensitive to non-structural changes (brightness, gamma, spatial shift)</li>
+</ul></li>
+<li>The SSIM index is calculated from two images, A and B, by comparing the pixel intensities in small patches at the same location. It is the product of three terms
+<ol class="org-ol">
+<li>The luminance (brightness), I(A,B) = 2&mu;<sub>A</sub> &mu;<sub>B</sub> / (&mu;<sub>A</sub><sup>2</sup> + &mu;<sub>B</sub><sup>2</sup>)</li>
+<li>The contrast, c(A,B) = 2 &sigma;<sub>A</sub> &sigma;<sub>B</sub> / (&sigma;<sub>A</sub><sup>2</sup> + &sigma;<sub>B</sub><sup>2</sup>)</li>
+<li>The structure, s(A,B) = &sigma;<sub>AB</sub> / (&sigma;<sub>A</sub> &sigma;<sub>B</sub>)</li>
+</ol></li>
+<li>Here, &mu; is the mean of the patch, &sigma; the standard deviation, and &sigma;<sub>AB</sub> the crosscorrelation</li>
+<li>It is clear, that the SSIM index takes on values from -1 to +1 and is symmetric in the arguments. Also, the nominator in the  contrast term cancels with the denominator in the structure term, so really there are just two terms in the SSIM
+<ul class="org-ul">
+<li>Usually, small stabilising terms (scalars) are added to the nominator and denominator in each of the three terms, to avoid dividing with zero when the mean or variance vanishes; so there are three additional parameters to adjust, in addition to the patch size. Often, these scalars can be set to zero.</li>
+</ul></li>
+<li>The SSIM index is calculated for each pixel in an image, based on a patch of variable size, then averaged to give a single number for the entire image. The average can be a simple arithmetic mean, or some space-varying weighted mean.</li>
+<li>The SSIM index is quite robust against (returns high values for) changes in luminance shifting, contrast stretching, and additive noise on highly patterned backgrounds. This is consistent with  humans visual perception</li>
+<li>However, it is highly sensitive to (returns low values for) shifts, rotations, scaling (zooming in/out), and additive noise in homogeneous regions. This is not consistent with human visual perception (except maybe for the noise part)</li>
+<li>To address the shortcomings of the SSIM measure, and inspired by how it fails, a new measure was developed:</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4407438" class="outline-2">
+<h2 id="org4407438"><span class="section-number-2">3.</span> The Complex Wavelet SSIM (CW-SSIM) index</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>The CW-SSIM was developed in 2005 and sounds like a very good idea. But, for some reason, hardly anyone is citing that work.</li>
+<li>The CW-SSIM index is the product of two terms that capture
+<ol class="org-ol">
+<li>The <i>magnitude</i> of wavelet coefficients, m</li>
+<li>The consistency of <i>phase</i> changes</li>
+</ol></li>
+<li>Probably worth visting the 2005 paper for a careful description, since this review doesn't give details on how the transform is done and what is subbands and coefficients are combined in the measure.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge8b9e32" class="outline-2">
+<h2 id="orge8b9e32"><span class="section-number-2">4.</span> Restoration and classification</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>This is an area that has been completely dominated by deep learning since 2012, so any triumphs of SSIM in this arena will have been short-lived. Still, it is instructive to see how far you can go with very little, and just plain funny to see what happen when you try to apply one idea (SSIM) to just about everything you can think of.</li>
+<li>For image restoration, when the problem is simple, i.e. when the distorted signal is simply a linearly blurred version with additive noise, it is well known that the Wiener filter is optimal &#x2014; it minimises the MSE (the expectation of the squared error). But what happens if we minimise another measure, say, the SSIM?
+<ul class="org-ul">
+<li>Not surprisingly, SSIM-optimal linear filters, that minimise the stat-SSIM (very similar to SSIM), perform better than MSE based filters, in terms of visual perceptual fidelity.</li>
+</ul></li>
+<li>For classification, the toy model is hand written digits, and CW-SSIM returns an impressive 97.7% accuracy. 
+<ul class="org-ul">
+<li>However, this is not MNIST data, these are test images that are generated from ground-truth images, via shifting, scaling, rotation, and blurring.</li>
+<li>The classification is then a matter of calculating the CW-SSIM between a test image and each of the ten ground-truth images, and then classify the test image as the digit corresponding to the pairing with the highest score.</li>
+<li>The important difference from MNIST, is that here there is only one ground-truth set of neatly typed hand-written digits and all the test images are generated from this set. In MNIST, each person writing has their own ground-truth &#x2014; some people use serifs on their numbers, others don't etc.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org61cba85" class="outline-2">
+<h2 id="org61cba85"><span class="section-number-2">5.</span> Resources</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>Further reading
+<ul class="org-ul">
+<li>Wikipedia on SSIM
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Structural_similarity">https://en.wikipedia.org/wiki/Structural<sub>similarity</sub></a></li>
+</ul></li>
+<li>SSIM at a single scale
+<ul class="org-ul">
+<li>2002 (short read): <a href="https://ieeexplore.ieee.org/document/995823">A universal image quality index</a></li>
+<li>2004 (highly cited paper): <a href="https://ieeexplore.ieee.org/document/1284395">Image quality assessment: from error visibility to structural similarity</a></li>
+</ul></li>
+<li>SSIM over multiple scales
+<ul class="org-ul">
+<li>2003: <a href="https://ieeexplore.ieee.org/document/1292216">Multiscale structural similarity for image quality assessment</a></li>
+</ul></li>
+<li>SSIM for wavelets
+<ul class="org-ul">
+<li>2005: <a href="https://ieeexplore.ieee.org/document/1415469">Translation insensitive image similarity in complex wavelet domain</a></li>
+</ul></li>
+<li>A comparison of PSNR and SSIM
+<ul class="org-ul">
+<li>2010: <a href="https://ieeexplore.ieee.org/document/5596999">Image Quality Metrics: PSNR vs. SSIM</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>

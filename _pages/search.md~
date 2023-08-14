@@ -1,0 +1,61 @@
+---
+title: Teaching #this is the title on the page and in the breascrumbs
+permalink: /teaching/
+toc: true
+toc_sticky: true
+layout: search
+#classes: wide # lets the text expand across page to the right to where the TOC would normally be
+---
+
+A list of courses, schools, and events that I am involved in.
+
+<!---
+outcommented text
+-->
+
+## 2020
+### [EXCITE Summer School on Biomedical Imaging](https://excite.ethz.ch/education/summer-school.html)
+*31 August -- 11 September 2020; ETH Zurich, Switzerland*\\
+This school is dedicated to teaching the basics of biomedical imaging alongside an overview of applications which are vital to understand recent advances and current challenges in biological and medical imaging.\\
+*Role: Lecturer*
+ 
+### [EMBO Practical Course: Advanced Methods in BioImage Analysis](https://www.embl.de/training/events/2020/BIA20-01/index.html) 
+*3--9 October 2020; EMBL Heidelberg, Germany*\\
+This advanced course concentrates on teaching cutting-edge concepts and tools for quantitative image analysis, and will seek to upgrade the competencies of future bioimage analysis experts on both theoretical algorithm advancements as well as on practical implementation skills.\\
+*Roles: Co-organiser and teacher*
+
+### [ZIDAS 2020: switZerland's Image and Data Analysis School](https://2020.zidas.org)
+*29 June -- 3 July 2020; Lausanne, Switzerland*\\
+This one-week school provides a hands-on introduction to image processing and analysis, with an emphasis on biologically relevant examples.\\
+*Roles: Organiser and teacher*
+
+### [The 4th NEUBIAS Conference & Symposium](http://eubias.org/NEUBIAS/neubias2020-conference/bordeaux-2020/)
+*3--6 March 2020; Bordeaux, France*\\
+The 4th Annual Conference of NEUBIAS, gathering the whole BioImage Analysis Community.\\
+*Roles: Speaker (sattelite event), organiser (call4help)*
+
+
+### [EMBL Course: Deep Learning for Image Analysis](https://www.embl.de/training/events/2020/MAC20-01/index.html) 
+*20--24 January 2020; EMBL Heidelberg, Germany* \\
+This is a blended learning course on Deep Learning for Image Analysis, consisting of 3 online sessions with associated hands-on exercises and a week-long onsite session at EMBL Heidelberg.\\
+*Role: Trainer*
+
+
+
+
+## 2014--2019
+Listed [here](http://www.let-your-data-speak.com/#teaching) (click "Show Past Activities").
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150233690-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-150233690-2');
+</script>
+

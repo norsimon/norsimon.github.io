@@ -1,0 +1,11 @@
+---
+title: "Here goes the title, with or without quotation marks"
+tags: [deep learning, image-analysis]
+category: papers
+excerpt: Once upon a time there was a little ...
+---
+
+
+Here goes all the normal org text that org-publish will turn into html.
+
+

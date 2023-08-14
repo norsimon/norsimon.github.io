@@ -1,0 +1,6 @@
+---
+title: "Mining for strong gravitational lenses with self-supervised learning"
+tags: [deep learning]
+category: papers
+excerpt: '"...the self-supervised model was trained in a generalized task-agnostic way requiring no labelled samples, yet the resulting representations enabled rapid and easy discovery of speciﬁc and rare objects."'
+---

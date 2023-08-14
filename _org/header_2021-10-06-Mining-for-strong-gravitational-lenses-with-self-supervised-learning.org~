@@ -1,0 +1,67 @@
+#+BEGIN_EXPORT html
+---
+title: "Mining for strong gravitational lenses with self-supervised learning"
+tags: [deep learning]
+category: papers
+excerpt: '"...the self-supervised model was trained in a generalized task-agnostic way requiring no labelled samples, yet the resulting representations enabled rapid and easy discovery of speciﬁc and rare objects."'
+---
+#+END_EXPORT
+
+** What is this post about?
+- Notes from reading the 2021 paper:
+  + Mining for strong gravitational lenses with self-supervised learning"
+  + by George Stein, Jacqueline Blaum, Peter Harrington, Tomislav Medan, and Zarija Lukic
+  + https://arxiv.org/abs/2110.00023
+** Short take
+- A *self-supervised convolutional neural networks* (CNN) is trained to identify candidates for strong gravitational lensing in already published image data sets.
+- The self-supervised approach addresses shortcomings in supervised CNNs that depend on larger amounts of (well-balanced classes of) labeled data for training.
+- The underlying idea is to train the CNN to "build meaningful embeddings or representations by solving contrived tasks during training", i.e. the network is learning which features in an image it should pay attention to.
+- Compared to auto-encoders, self-supervised CNNs produce better representations that generalize to different tasks.
+  + The representations learned are also semantically meaningful
+- A web-based tool for similarity searches is made available at https://github.com/georgestein/ssl-legacysurvey (link there to https://share.streamlit.io/georgestein/galaxy_search, which returned an error when tried)
+- The learned representation is task-agnostic, in the sense that no lens label was used, though the data-augmentations were obviously designed to learn to ignore aspects of the images that are not relevant to detection of lensing.
+- The actual classification of lens-candidates is done with a linear classifier, taking as input the feature vectors from running the labeled lens images and the unlabeled images through the pre-trained CNN.
+  + So, ultimately and obviously, some labeled data is still needed for the detection of candidates.
+** What do they do?
+- They train a self-supervised CNN on a large volume of unlabeled data, so that it sees many different realizations of each morphology and all possible (observed) morphologies.
+  + This is where the CNN learns the relevant representations of the images, i.e., which features to focus on.
+- Then, they use the learned representations to identify new candidates, by doing similarity searches and classification.
+- This way, they identify 1'192 new strong-lens candidates that were also visually inspected.
+
+** How do they do it?
+- The training is done by using a *contrastive loss function* to make the network learn to distinguish between pairs of different images and pairs of similar images, the latter being created by augmentations (rotation, scaling, noise, etc) 
+  + These augmentations must reflect the inherent symmetries, i.e. what is /not/ important in the dataset, so that the network learns what to ignore, e.g. noise, rotation, scaling, translation, point-spread-function and other observational artifacts.
+  + The learned representations are thus, in a sense, the invariant properties of the images (objects imaged)
+- A subset of just 3.5 million images is used for training a *ResNet50 network* with queue $length K=262'144$
+  + 8 hours on 8 NVIDIA Tesla V100 GPUs
+- All 76 million images were then pushed through the trained network to distill out a representation vector $z$, of length 2'048 for each image (training images are $96x96=9'216$ pixels large)
+  - This representation vector is largely independent of the symmetries used to generate the augmented data-set (noise, scale, etc.)
+- Lens candidates were identified by three different methods
+  1. Similarity search, by first calculating the *cosine similarity* (normalized scalar product) in representation space, i.e. the angle between two representation vectors $z_i$ and $z_j$, 
+     * For each of the millions of images they identified the 999 most similar to each, thus similar images can be grouped together 
+     * Similarity search could then be performed based on a single labeled image.
+     * This approach is also good for improving the training set, by using it to identify examples of false positives
+  2. Supervised training of a linear classifier, to predict the probability that at given input image is a lens
+     * A matter of binary partitioning of the 2'048-dimensional representation space into lens and non-lens. 
+     * The linear classifier was of the form $y=W^Tz+b$ ($y$: lens-probability, $W$ 2'048-dimensional weight matrix to learn, $z$: representation vector, $b$: bias to learn)
+     * Linear classifier implemented in Pytoch using a *binary cross entropy loss* and trained in minutes on a single CPU.
+     * Non-linear random-forest approach led to overfitting and worse performance.
+  3. Fine-tuning of the self-supervised model
+     * This led to somewhat improved results, but doesn't seem to be worth the extra work and longer training time
+- No direct tuning of network or hyper-parameters done: They copied a previous ResNet50 architecture used for self-supervised training.    
+- The hand-curated list of strong-lens candidates they use for training (70%) and validation (30%), i.e. their labeled dataset, consist of just 1'615 objects
+** Why do they do it?
+- Manual inspection is no longer feasible---even with citizen science approached the rate of data-production outstrips the rate of data-analysis by three orders of magnitude of more. 
+- Supervised CNNs can handle the data volume, but the training labels are biased towards bright and large objects and generally skews towards more common galaxy morphologies.
+- Supervised CNN struggles when the number of labels in any one class is very small. 
+- A method is needed that is robust to noise (errors) and bias both in the labels.
+
+** Conclusions and open questions
+- "...perhaps this is the most important result of this work: the self-supervised model was trained in a generalized task-agnostic way requiring no labelled samples, yet the resulting representations enabled rapid and easy discovery of speciﬁc and rare objects."
+- The total number of object (sources), and hence cropped images, they train on is about 76 million---these are all the sources (bright spots) in several published catalogs, where the source is /not/ classified as a star, because its shape deviated from that expected from the point-spread-function of the telescope.
+  + This is comparable to the number of cells in an image-based high-content-screen, with say 100 cells per image, nine images per well, 384 wells per plate, and 200 plates (69 million cells). 
+- Could this approach, and perhaps even the architecture, be used to identity rare events in an image-based high-content screen?
+  + I see no reason why not, as long as the augmentations used to learn the invariants are done intelligently
+- The approach looks very general and it is an attractive fact that the computationally heavy part, the training of the CNN, is done only once and in a largely task-agnostic manner
+  + Asking new questions of the data-set, i.e. looking for new rare events (say, apoptosis, double-nucleated cells, foci-clusters in the cytoplasm, out-of focus cells, etc. ), can be done in seconds via a similarity search or minutes by training a linear classifier.
+

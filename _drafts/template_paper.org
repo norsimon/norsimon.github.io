@@ -1,0 +1,29 @@
+#+TITLE: This title will override the file-name
+#+TAGS:  tag1 tag2 composite-tag
+#+CATEGORY: papers
+#+EXCERPT: this will appear on the overview
+#+MATHJAX: true
+
+** What is this post about?
+ - Notes from reading the YYYY paper:
+   + PAPER TITLE
+   + by PAPER AUTORS
+   + PAPER LINK
+** Short take
+** What do they do?
+** Why do they do it?
+** Conclusions and open questions
+** Annotated resources
+
+* Alternative headlines
+** Main argument
+** Keywords
+** The research question
+** Methodology
+** What do I think of it?
+
+* notes to self :noexport:
+- Write in present tense
+- Answer /why/ I am summarising this paper
+  + If they are notes to myself, this can be a longer post
+  + If the goal is to include it in a paper I am writing, say how it relates to my work

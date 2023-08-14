@@ -1,0 +1,36 @@
+---
+title: Links #this is the title on the page and in the breascrumbs
+permalink: /links/
+#toc: true
+toc_sticky: true
+---
+
+A collection of links to useful or interesting  resources
+
+<!---
+outcommented text
+Is this better handled using tags and simple adding as posts? Would be easy to search and make it easy to add some comments to the usage, without being an actual review. Would I use it myself?
+-->
+
+# Image Analysis
+## Segmentation
+[Allen Cell Structure Segmenter](https://www.allencell.org/segmenter.html)
+Python-based open source toolkit for 3D segmentation of intracellular structures in fluorescence microscope images.
+Brings together classic image segmentation and iterative deep learning workflows.
+
+# Online learning
+[The Missing Semester of Your CS Education](https://missing.csail.mit.edu)
+Teaches you how to master the command-line, use a powerful text editor, use fancy features of version control systems, and much more!
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150233690-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-150233690-2');
+</script>
+

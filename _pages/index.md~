@@ -1,0 +1,42 @@
+---
+title: Home
+layout: home_no_posts
+#layout: home
+sidebar:
+  nav: "IDA"
+permalink: /
+toc: true
+toc_sticky: true
+---
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FM4NEJE2C0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FM4NEJE2C0');
+</script>
+
+
+
+Welcome to my scientific home page!  
+I work at [ETH Zurich](https://ethz.ch/en.html) in the Scientific Center for Optical and Electron Microscopy ([ScopeM](http://www.scopem.ethz.ch)) together with a small group of Image and Data Analysts ([IDA](http://www.let-your-data-speak.com)) focusing on image-data from the lifesciences. 
+
+---
+
+## Twitter feed
+
+<a class="twitter-timeline" data-width="500" data-height="800" data-theme="light" href="https://twitter.com/SimonFlyvbjerg?ref_src=twsrc%5Etfw">Tweets by SimonFlyvbjerg</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+
+## Why the raccoon?
+We chose the raccoon as logo for our group for three reasons
+
+1. We like it --- it has a face
+2. It is easy to threshold
+3. It has abilities we strive to emulate: 
+  - *"Raccoons are noted for their intelligence, with studies showing that they are able to remember the solution to tasks for at least three years"* [Wikipedia](https://en.wikipedia.org/wiki/Raccoon)
+
+---
