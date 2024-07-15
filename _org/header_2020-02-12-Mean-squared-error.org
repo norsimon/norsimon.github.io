@@ -1,7 +1,0 @@
----
-title:  "Mean Squared Error: Love It or Leave It?"
-tags:  [image-processing, signal-quality]
-category: papers
-excerpt: '"...an optimized system is only as good as the optimization criterion used to design it." Some MSE bashing, some SSIM praising.' 
-mathjax: true
---- 

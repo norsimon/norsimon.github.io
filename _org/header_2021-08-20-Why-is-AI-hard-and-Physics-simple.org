@@ -1,6 +1,0 @@
----
-title: "Why is AI hard and Physics simple?"
-tags: [deep learning]
-category: papers
-excerpt: '"...this paper is a preview of a new book and has the goal of finding a bottom-up formalism that allows (certain types of) physicists to understand DL by taking an /effective theory/ approach"'
----
